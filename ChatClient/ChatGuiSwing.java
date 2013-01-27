@@ -27,23 +27,37 @@
  */
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ChatClientGuiSwing implements ChatClientGui {
-    private ChatClient clientBackend;
+public class ChatGuiSwing implements ChatGui {
+    private Backend clientBackend;
 
-    private JTextArea incomingTextArea;
     private JTextField sendingTextArea;
+    private JTextPane incomingTextArea;
 
-    public ChatClientGuiSwing(ChatClient clientBackend) {
+    private Style chatStyle;
+    private Style systemStyle;
+
+    public ChatGuiSwing(Backend clientBackend) {
         this.clientBackend = clientBackend;
 
         buildGui();
     }
 
-    public void displayMessage(String message) {
-        incomingTextArea.append(message);
+    public void displayChatMessage(String message) {
+        try {
+            StyledDocument doc = incomingTextArea.getStyledDocument();
+            doc.insertString(doc.getLength(), message+"\n", chatStyle);
+        } catch (BadLocationException exc) {}
+    }
+
+    public void displaySystemMessage(String message) {
+        try {
+            StyledDocument doc = incomingTextArea.getStyledDocument();
+            doc.insertString(doc.getLength(), message+"\n", systemStyle);
+        } catch (BadLocationException exc) {}
     }
 
     private void buildGui() {
@@ -58,10 +72,16 @@ public class ChatClientGuiSwing implements ChatClientGui {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         //Create "Incoming Part"
-        incomingTextArea = new JTextArea(15, 20);
-        incomingTextArea.setLineWrap(true);
-        incomingTextArea.setWrapStyleWord(true);
+        incomingTextArea = new JTextPane();
         incomingTextArea.setEditable(false);
+
+        chatStyle = incomingTextArea.addStyle("chatStyle", null);
+        StyleConstants.setForeground(chatStyle, Color.BLACK);
+
+        systemStyle = incomingTextArea.addStyle("systemStyle", null);
+        StyleConstants.setForeground(systemStyle, Color.GRAY);
+        StyleConstants.setItalic(systemStyle, true);
+
         JScrollPane fScroller = new JScrollPane(incomingTextArea);
         fScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         fScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -72,7 +92,6 @@ public class ChatClientGuiSwing implements ChatClientGui {
 
         sendingTextArea = new JTextField(20);
         sendingTextArea.setMaximumSize(new Dimension(sendingTextArea.getMaximumSize().width, sendingTextArea.getMinimumSize().height));
-        /**sendingTextArea.addActionListener(new SendListener());**/ //TODO
         sendingTextArea.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent ev) {
@@ -84,7 +103,6 @@ public class ChatClientGuiSwing implements ChatClientGui {
 
         JButton sendButton = new JButton("Send");
         sendButton.setMaximumSize(new Dimension(sendButton.getMaximumSize().width, sendButton.getMinimumSize().height));
-        /**sendButton.addActionListener(new SendListener());**/ //TODO
         sendButton.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent ev) {

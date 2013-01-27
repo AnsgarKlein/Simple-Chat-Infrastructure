@@ -28,4 +28,5 @@
 
 public interface MessageDistributor {
     public void distributeMessage(String message);
+    public void disconnectClient(ClientHandler client);
 }

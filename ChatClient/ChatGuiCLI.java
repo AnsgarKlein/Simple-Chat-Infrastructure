@@ -28,11 +28,11 @@
 
 import java.io.*;
 
-public class ChatClientGuiCLI implements ChatClientGui {
+public class ChatGuiCLI implements ChatGui {
 
-    private ChatClient clientBackend;
+    private Backend clientBackend;
 
-    public ChatClientGuiCLI(ChatClient clientBackend_) {
+    public ChatGuiCLI(Backend clientBackend_) {
         this.clientBackend = clientBackend_;
 
         //System.out.println("exiting...");
@@ -40,7 +40,12 @@ public class ChatClientGuiCLI implements ChatClientGui {
         new Thread(new InputListener()).start();
     }
 
-    public void displayMessage(String msg) {
+    public void displayChatMessage(String msg) {
+        System.out.println("\tMsg: "+msg+"\n");
+        System.out.flush();
+    }
+
+    public void displaySystemMessage(String msg) {
         System.out.println("\tMsg: "+msg+"\n");
         System.out.flush();
     }

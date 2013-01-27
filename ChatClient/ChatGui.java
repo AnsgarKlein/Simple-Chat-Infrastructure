@@ -26,6 +26,7 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-public interface ChatClientGui {
-    public void displayMessage(String message);
+public interface ChatGui {
+    public void displayChatMessage(String message);
+    public void displaySystemMessage(String message);
 }

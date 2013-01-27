@@ -41,13 +41,10 @@ public class ClientHandler implements Runnable {
         this.distributor = distributor;
 
         try {
-            //clientSocket = clientSocket;
             InputStreamReader isReader = new InputStreamReader(clientSocket.getInputStream());
-
-            //PrintWriter writer = new PrintWriter(socket.getOutputStream());
-            writer = new PrintWriter(clientSocket.getOutputStream());
-
             reader = new BufferedReader(isReader);
+
+            writer = new PrintWriter(clientSocket.getOutputStream());
         } catch (Exception exc) {
             System.err.println("\n#################################################");
             System.err.println("Creating ClientHandler - Exception - Stack Trace:");
@@ -75,8 +72,8 @@ public class ClientHandler implements Runnable {
             while ((message = reader.readLine()) != null) {
                 System.out.println(clientSocket.getPort()+": "+message);
                 distributor.distributeMessage(clientSocket.getPort()+": "+message);
-
-                //try { Thread.currentThread().destroy(); } catch(InterruptedException exc2) { System.err.println("InterruptedException"); }
+                
+                Thread.currentThread().yield();
             }
         } catch (Exception exc) {
             System.err.println("\n#################################################");
@@ -84,7 +81,9 @@ public class ClientHandler implements Runnable {
             System.err.println(exc.getMessage());
             System.err.println("\n#################################################");
         }
-
+        
+        //Client disconnected
+        distributor.disconnectClient(this);
     }
 
     public void run() {

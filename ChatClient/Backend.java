@@ -29,29 +29,34 @@
 import java.io.*;
 import java.net.*;
 
-public class ChatClient {
+public class Backend {
     private static final int ConnectionRetryCount = 5;
 
     private final int serverPortNumber;
-    private ChatClientGui gui;
+    private ChatGui gui;
 
     private BufferedReader reader;
     private PrintWriter writer;
     private Socket serverSocket;
 
-    public ChatClient(String serverIP, int serverPort) {
+    public Backend(String serverIP, int serverPort) {
         this.serverPortNumber = serverPort;
+        
+        //Create appropriate gui
+        gui = new ChatGuiSwing(this);
+        //gui = new ChatClientGuiCLI(this)
 
-        System.out.print("Connecting to: "+serverIP+":"+serverPort+" ... ");
-        if (networkSetup(serverIP, serverPort) == false) {
-            System.out.println("failed");
+        //Connect to server
+        gui.displaySystemMessage("Connecting to: "+serverIP+":"+serverPort+" ... ");
+        boolean isConnected = connect(serverIP, serverPort);
+        if ( isConnected == false) {
+            gui.displaySystemMessage("failed");
 
-            //Retrying
-            boolean isConnected = false;
+            //Retry a few times
             for (int i = 0; i < ConnectionRetryCount; i++) {
-                System.out.print("retrying ... ");
-                if (networkSetup(serverIP, serverPort) == true) {
-                    System.out.println("success");
+                gui.displaySystemMessage("retrying ... ");
+                if (connect(serverIP, serverPort) == true) {
+                    gui.displaySystemMessage("success");
                     isConnected = true;
                     break;
                 }
@@ -59,30 +64,23 @@ public class ChatClient {
             }
 
             if (!isConnected) {
-                System.out.println("error connecting to server... exiting\n");
-                System.exit(1);
+                gui.displaySystemMessage("error connecting to server... exit\n");
+                //System.exit(1);
             }
-            
+
         } else {
-            System.out.println("success");
+            gui.displaySystemMessage("success");
         }
 
-        //Create appropriate gui
-        gui = new ChatClientGuiSwing(this);
-        //gui = new ChatClientGuiCLI(this);
-
         //thread for listening for incoming messages
-        /**Thread incomingReaderThread = new Thread(new IncomingMessageReader());
-        incomingReaderThread.start();**/
         new Thread() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 String message = "";
 
                 try {
                     while ((message = reader.readLine()) != null) {
-                        System.out.println(message); //debug!
-                        gui.displayMessage(message+"\n");
+                        gui.displayChatMessage(message);
+                        //System.out.println(message); //debug!
                     }
                 }
                 catch (Exception exc) {
@@ -99,8 +97,10 @@ public class ChatClient {
         try {
             writer.println(msg);
             writer.flush();
+            
+            //REMOVE THIS!
             if (writer.checkError() == true) {
-                System.err.println("something is wrong in 'writer'");
+                gui.displaySystemMessage("something is wrong in 'writer' - disconnect ?");
             }
         }
         catch (Exception exc) {
@@ -111,7 +111,7 @@ public class ChatClient {
         }
     }
 
-    private boolean networkSetup(String ip, int port) {
+    private boolean connect(String ip, int port) {
         try {
             serverSocket = new Socket(ip, port);
 

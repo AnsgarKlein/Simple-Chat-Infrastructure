@@ -45,7 +45,7 @@ public class ChatServer implements MessageDistributor {
             while (true) {
                 Socket clientSocket = serverSocket.accept(); //this blocks until a connection is made
 
-                //Create new client
+                //create new client
                 ClientHandler newClient = new ClientHandler(clientSocket, this);
 
                 //add new client to list of all clients
@@ -54,7 +54,7 @@ public class ChatServer implements MessageDistributor {
                 //start new client in a thread
                 new Thread(newClient).start();
 
-                printServerMessage("Found Connection (socket:"+clientSocket.getPort()+")- Starting new thread"); //debug
+                printServerMessage("New Connection: "+clientSocket.getInetAddress()+":"+clientSocket.getPort()+" --> "+clientSocket.getLocalAddress()+":"+clientSocket.getLocalPort());
             }
         } catch (Exception exc) {
             System.err.println("\n#################################################");
@@ -65,15 +65,23 @@ public class ChatServer implements MessageDistributor {
     }
     
     private void printServerMessage(String str) {
-        System.out.println("\t\t<SYSTEM>\t"+str);
+        System.out.println("<SYSTEM>\t"+str);
     }
     
-    public void distributeMessage(String message) {
-        printServerMessage("distributing message to "+clients.size()+" child ... ");
-        System.out.flush();
+    public synchronized void distributeMessage(String message) {
+        final int warnTime = 100;
+        long startTime = System.currentTimeMillis();
+        
         for (ClientHandler client : clients) {
             client.writeToClient(message);
+            
+            if (System.currentTimeMillis() - startTime >= warnTime) {
+                printServerMessage("Message distribution is taking a long ... (>"+warnTime+"ms)");
+            }
         }
-        printServerMessage("distribution done");
+    }
+    
+    public void disconnectClient(ClientHandler client) {
+        this.clients.remove(client);
     }
 }
