@@ -38,8 +38,7 @@ public class Main {
         new ChatClient(serverIP, serverPort);
     }
 
-    public static void setLookAndFeel(String value)
-    {
+    public static void setLookAndFeel(String value) {
         try {
             if (value == "System") {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -26,6 +26,40 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-public interface ChatClientGui {
-    public void displayMessage(String message);
+import java.io.*;
+
+public class ChatClientGuiCLI implements ChatClientGui {
+
+    private ChatClient clientBackend;
+
+    public ChatClientGuiCLI(ChatClient clientBackend_) {
+        this.clientBackend = clientBackend_;
+
+        //System.out.println("exiting...");
+        //System.exit(0);
+        new Thread(new InputListener()).start();
+    }
+
+    public void displayMessage(String msg) {
+        System.out.println("\tMsg: "+msg+"\n");
+        System.out.flush();
+    }
+
+    public class InputListener implements Runnable {
+        public void run() {
+            String currentLine = "";
+            InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+            BufferedReader inStream = new BufferedReader(inputStreamReader);
+
+            while ( currentLine.equals("quit") == false ) {
+                try {
+                    currentLine = inStream.readLine();
+                    clientBackend.sendMessage(currentLine);
+                }
+                catch (IOException exc) {
+                    exc.printStackTrace();
+                }
+            }
+        }
+    }
 }

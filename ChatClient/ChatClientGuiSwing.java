@@ -30,20 +30,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ChatClientGuiSwing {
+public class ChatClientGuiSwing implements ChatClientGui {
+    private ChatClient clientBackend;
 
     private JTextArea incomingTextArea;
     private JTextField sendingTextArea;
 
-    public ChatClientGuiSwing() {
+    public ChatClientGuiSwing(ChatClient clientBackend) {
+        this.clientBackend = clientBackend;
+
         buildGui();
+    }
+
+    public void displayMessage(String message) {
+        incomingTextArea.append(message);
     }
 
     private void buildGui() {
         //Create Frame
         JFrame frame = new JFrame("Chat Client");
+        frame.setMinimumSize(new Dimension(200, 200));
         frame.setSize(400, 500);
-        frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create MainPanel
@@ -65,11 +72,27 @@ public class ChatClientGuiSwing {
 
         sendingTextArea = new JTextField(20);
         sendingTextArea.setMaximumSize(new Dimension(sendingTextArea.getMaximumSize().width, sendingTextArea.getMinimumSize().height));
-        sendingTextArea.addActionListener(new SendListener());
+        /**sendingTextArea.addActionListener(new SendListener());**/ //TODO
+        sendingTextArea.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent ev) {
+                    clientBackend.sendMessage(sendingTextArea.getText());
+                    sendingTextArea.setText("");
+                    sendingTextArea.requestFocus();
+                }
+            });
 
         JButton sendButton = new JButton("Send");
         sendButton.setMaximumSize(new Dimension(sendButton.getMaximumSize().width, sendButton.getMinimumSize().height));
-        sendButton.addActionListener(new SendListener());
+        /**sendButton.addActionListener(new SendListener());**/ //TODO
+        sendButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent ev) {
+                    clientBackend.sendMessage(sendingTextArea.getText());
+                    sendingTextArea.setText("");
+                    sendingTextArea.requestFocus();
+                }
+            });
 
         outgoingPanel.add(Box.createRigidArea(new Dimension(5,0)));
         outgoingPanel.add(sendingTextArea);
@@ -77,12 +100,13 @@ public class ChatClientGuiSwing {
         outgoingPanel.add(sendButton);
         outgoingPanel.add(Box.createRigidArea(new Dimension(5,0)));
 
-        //Put everything together
+        //Put everything together & show
         mainPanel.add(Box.createRigidArea(new Dimension(0,5)));
         mainPanel.add(fScroller);
         mainPanel.add(Box.createRigidArea(new Dimension(0,5)));
         mainPanel.add(outgoingPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,5)));
         frame.getContentPane().add(mainPanel);
+        frame.setVisible(true);
     }
 }

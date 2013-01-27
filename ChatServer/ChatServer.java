@@ -26,67 +26,35 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class ChatServer {
-    private ArrayList<PrintWriter> clientOutputStreams;
+public class ChatServer implements MessageDistributor {
+    private ArrayList<ClientHandler> clients;
 
     private final int localPortNumber;
 
-    public class ClientHandler implements Runnable {
-        Socket socket;
-        BufferedReader reader;
-
-        public ClientHandler(Socket clientSocket) {
-            try {
-                socket = clientSocket;
-                InputStreamReader isReader = new InputStreamReader(socket.getInputStream());
-                reader = new BufferedReader(isReader);
-            } catch (Exception exc) {
-                System.err.println("\n#################################################");
-                System.err.println("Creating ClientHandler - Exception - Stack Trace:");
-                System.err.println(exc.getMessage());
-                System.err.println("\n#################################################");
-            }
-            
-        }
-        
-        public void run() {
-            String message;
-            try {
-                while ((message = reader.readLine()) != null) {
-                    System.out.println(socket.getPort()+": "+message);
-                    distributeMessage(socket.getPort()+": "+message);
-                    
-                    //try { Thread.currentThread().destroy(); } catch(InterruptedException exc2) { System.err.println("InterruptedException"); }
-                }
-            } catch (Exception exc) {
-                System.err.println("\n#################################################");
-                System.err.println("ClientHandler - Exception - Stack Trace:");
-                System.err.println(exc.getMessage());
-                System.err.println("\n#################################################");
-            }
-            
-        }
-    }
-
     public ChatServer(int port) {
+        System.out.println("Starting Server on port "+port+" ...");
         this.localPortNumber = port;
-        
-        clientOutputStreams = new ArrayList<PrintWriter>();
+        clients = new ArrayList<ClientHandler>();
 
         try {
             ServerSocket serverSocket = new ServerSocket(this.localPortNumber);
 
             while (true) {
-                Socket clientSocket = serverSocket.accept();
-                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
-                clientOutputStreams.add(writer);
+                Socket clientSocket = serverSocket.accept(); //this blocks until a connection is made
 
-                new Thread(new ClientHandler(clientSocket)).start();
-                //System.out.println("Found Connection - Starting new thread"); //debug
+                //Create new client
+                ClientHandler newClient = new ClientHandler(clientSocket, this);
+
+                //add new client to list of all clients
+                clients.add(newClient);
+
+                //start new client in a thread
+                new Thread(newClient).start();
+
+                printServerMessage("Found Connection (socket:"+clientSocket.getPort()+")- Starting new thread"); //debug
             }
         } catch (Exception exc) {
             System.err.println("\n#################################################");
@@ -95,18 +63,17 @@ public class ChatServer {
             System.err.println("\n#################################################");
         }
     }
-
-    private void distributeMessage(String message) {
-        for (PrintWriter writer : clientOutputStreams) {
-            try {
-                writer.println(message);
-                writer.flush();
-            } catch (Exception exc) {
-                System.err.println("\n#################################################");
-                System.err.println("Sending Message to Clients - Exception - Strack Trace:");
-                System.err.println(exc.getMessage());
-                System.err.println("\n#################################################");
-            }
+    
+    private void printServerMessage(String str) {
+        System.out.println("\t\t<SYSTEM>\t"+str);
+    }
+    
+    public void distributeMessage(String message) {
+        printServerMessage("distributing message to "+clients.size()+" child ... ");
+        System.out.flush();
+        for (ClientHandler client : clients) {
+            client.writeToClient(message);
         }
+        printServerMessage("distribution done");
     }
 }
