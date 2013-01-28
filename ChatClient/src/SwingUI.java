@@ -1,37 +1,9 @@
-/**
- * Copyright (c) 2013, Ansgar Klein
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met: 
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer. 
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution. 
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- * The views and conclusions contained in the software and documentation are those
- * of the authors and should not be interpreted as representing official policies, 
- * either expressed or implied, of the FreeBSD Project.
- */
-
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ChatGuiSwing implements ChatGui {
+public class SwingUI implements UI {
     private Backend clientBackend;
 
     private JTextField sendingTextArea;
@@ -40,10 +12,11 @@ public class ChatGuiSwing implements ChatGui {
     private Style chatStyle;
     private Style systemStyle;
 
-    public ChatGuiSwing(Backend clientBackend) {
+    public SwingUI(Backend clientBackend) {
         this.clientBackend = clientBackend;
 
         buildGui();
+        sendingTextArea.requestFocus();
     }
 
     public void displayChatMessage(String message) {
@@ -62,7 +35,7 @@ public class ChatGuiSwing implements ChatGui {
 
     private void buildGui() {
         //Create Frame
-        JFrame frame = new JFrame("Chat Client");
+        final JFrame frame = new JFrame("Chat Client");
         frame.setMinimumSize(new Dimension(200, 200));
         frame.setSize(400, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,6 +43,23 @@ public class ChatGuiSwing implements ChatGui {
         //Create MainPanel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+
+        //Create Toolbar menu
+        JMenuItem menuItem = new JMenuItem("Change Nickname");
+        menuItem.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    //open window to change nickname
+                    new SwingNicknameChanger(frame);
+                }
+            });
+
+        JMenu menu = new JMenu("Chat");
+        menu.add(menuItem);
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(menu);
+
+        frame.setJMenuBar(menuBar);
 
         //Create "Incoming Part"
         incomingTextArea = new JTextPane();
@@ -95,7 +85,7 @@ public class ChatGuiSwing implements ChatGui {
         sendingTextArea.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent ev) {
-                    clientBackend.sendMessage(sendingTextArea.getText());
+                    clientBackend.sendChatMessage(sendingTextArea.getText());
                     sendingTextArea.setText("");
                     sendingTextArea.requestFocus();
                 }
@@ -106,7 +96,7 @@ public class ChatGuiSwing implements ChatGui {
         sendButton.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent ev) {
-                    clientBackend.sendMessage(sendingTextArea.getText());
+                    clientBackend.sendChatMessage(sendingTextArea.getText());
                     sendingTextArea.setText("");
                     sendingTextArea.requestFocus();
                 }
