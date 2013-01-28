@@ -1,30 +1,33 @@
 ###################################################
 
-ChatServer	=	"ChatServer/build/ChatServer.jar"
-ChatServerPath	=	"ChatServer/"
+BUILDPATH		=	"build/"
 
-ChatClient	=	"ChatClient/build/ChatClient.jar"
-ChatClientPath	=	"ChatClient/"
+JC			=	javac
 
-Library		=	"lib/build/ChatProtocol.jar"
-LibraryPath	=	"lib/"
+CHATSERVER_PATH		=	ChatServer/src
+CHATSERVER_SOURCES	=	$(wildcard $(CHATSERVER_PATH)/*.java)
+CHATSERVER_CLASSES	=	$(CHATSERVER_SOURCES:.java=.class)
 
-BUILDPATH	=	"build/"
+CHATCLIENT_PATH		=	ChatClient/src
+CHATCLIENT_SOURCES	=	$(wildcard $(CHATCLIENT_PATH)/*.java)
+CHATCLIENT_CLASSES	=	$(CHATCLIENT_SOURCES:.java=.class)
+
+LIBRARY_PATH		=	lib/ChatProtocol
+LIBRARY_SOURCES		=	$(wildcard $(LIBRARY_PATH)/*.java)
+LIBRARY_CLASSES		=	$(LIBRARY_SOURCES:.java=.class)
 
 ###################################################
 
-all: $(ChatServer) $(ChatClient)
-	cp $(ChatServer) $(BUILDPATH)
-	cp $(ChatClient) $(BUILDPATH)
-	cp $(Library) $(BUILDPATH)
-	@echo "compiled everything succesful"
+all: CHATSERVER CHATCLIENT LIBRARY
+	@echo "\tcompiled everything succesful\n"
 
-	
 clean:
-	cd $(ChatServerPath) && make clean
-	cd $(ChatClientPath) && make clean
-	cd $(LibraryPath) && make clean
-	rm --force $(BUILDPATH)/*.jar
+	rm --force $(CHATSERVER_PATH)/*.class
+	rm --force $(CHATCLIENT_PATH)/*.class
+	rm --force $(LIBRARY_PATH)/*.class
+	rm --force --recursive $(BUILDPATH)/ChatServer
+	rm --force --recursive $(BUILDPATH)/ChatClient
+	rm --force --recursive $(BUILDPATH)/lib
 
 install: 
 
@@ -33,15 +36,32 @@ uninstall:
 
 ###################################################
 
-$(ChatServer): $(Library)
-	@cd $(ChatServerPath) && make
-	@echo "\nChatServer compiled successful\n"
+CHATSERVER: $(CHATSERVER_CLASSES)
+	mkdir -p $(BUILDPATH)ChatServer
+	cp $(CHATSERVER_PATH)/*.class $(BUILDPATH)ChatServer
 
-$(ChatClient): $(Library)
-	@cd $(ChatClientPath) && make
-	@echo "\nChatClient compiled successful\n"
+$(CHATSERVER_CLASSES): $(CHATSERVER_SOURCES) $(LIBRARY_CLASSES)
+	$(JC) -cp lib/:$(CHATSERVER_PATH) $(CHATSERVER_SOURCES)
+	@echo "\tChatServer compiled successful\n"
 
-$(Library):
-	@cd $(LibraryPath) && make
-	@echo "\nChatProtocol compiled successful\n"
+#-------------------------------------------------#
 
+CHATCLIENT: $(CHATCLIENT_CLASSES)
+	mkdir -p $(BUILDPATH)ChatClient
+	cp $(CHATCLIENT_PATH)/*.class $(BUILDPATH)ChatClient
+
+$(CHATCLIENT_CLASSES): $(CHATCLIENT_SOURCES) $(LIBRARY_CLASSES)
+	$(JC) -cp lib/:$(CHATCLIENT_PATH) $(CHATCLIENT_SOURCES)
+	@echo "\tChatClient compiled successful\n"
+
+#-------------------------------------------------#
+
+LIBRARY: $(LIBRARY_SOURCES)
+	mkdir -p $(BUILDPATH)lib/ChatProtocol
+	cp $(LIBRARY_PATH)/*.class $(BUILDPATH)lib/ChatProtocol
+
+$(LIBRARY_CLASSES): $(LIBRARY_SOURCES)
+	$(JC) $(JFLAGS) $(LIBRARY_SOURCES)
+	@echo "\tChatProtocol compiled successful\n"
+
+#-------------------------------------------------#
