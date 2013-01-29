@@ -108,7 +108,7 @@ public class ChatServer {
      * @param sendingClient the ClientHandler which received the message
      */
     public synchronized void receiveMessage(String rawMessage, ClientHandler sendingClient) {
-        System.out.println(rawMessage+"\t(INCOMING)");
+        System.out.println("(INC)\t"+rawMessage);
 
         ChatProtocol.MessageType type = ChatProtocol.Protocol.getMessageType(rawMessage);
 
@@ -133,7 +133,7 @@ public class ChatServer {
                     ChatProtocol.MessageType.INFO);
 
             //print simple info message to server terminal
-            System.out.println(sendingClient.getName()+" --> "+newNick);
+            printServerMessage(sendingClient.getName()+" --> "+newNick);
 
             //actually change the nick
             sendingClient.setName(newNick);
@@ -152,7 +152,7 @@ public class ChatServer {
      * @param rawMessage The (correctly formated) message to send
      */
     public synchronized void distributeMessage(String rawMessage) {
-        System.out.println(rawMessage+"\t(OUTGOING)");
+        System.out.println("(OUT)\t"+rawMessage);
 
         //Tell every client what happened
         for (ClientHandler client : clients) {
