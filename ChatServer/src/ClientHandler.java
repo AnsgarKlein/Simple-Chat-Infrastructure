@@ -44,9 +44,16 @@ public class ClientHandler implements Runnable {
 
         //Set default (random) name
         java.util.Random generator = new java.util.Random();
-        int random = generator.nextInt(8999)+1000;
-        this.clientName = "unknown"+random;
+        String[] randomNames = {"Peter", "Phillip", "Harry", "Robert", "Walter", "Daniel", "Jack",
+                "David", "Charlie", "Benjamin", "George", "William", "Jacob", "Thomas", "Sam" };
 
+        int randomNumber = generator.nextInt(8999)+1000;
+        int randomName = generator.nextInt(randomNames.length);
+        
+        this.clientName = randomNames[randomName]+randomNumber;
+
+        
+        //Setup BufferedReader & PrintWriter
         try {
             InputStreamReader isReader = new InputStreamReader(clientSocket.getInputStream());
             reader = new BufferedReader(isReader);
@@ -58,7 +65,6 @@ public class ClientHandler implements Runnable {
             System.err.println(exc.getMessage());
             System.err.println("\n#################################################");
         }
-
     }
 
     /**
@@ -91,7 +97,7 @@ public class ClientHandler implements Runnable {
     public void setName(String newNick) {
         this.clientName = newNick;
     }
-    
+
     /**
      * This function is called directly (in an own thread) after the ClientHandler
      * has been created. (and a client connected)
@@ -123,7 +129,7 @@ public class ClientHandler implements Runnable {
      * This function will write a message to its client
      * Note: This function does NOT format the given message in any way
      * 
-     * @param rawMessage the message to send
+     * @param rawMessage the (already formated) message to send
      */
     public void writeToClient(String rawMessage) {
         try {
@@ -136,6 +142,5 @@ public class ClientHandler implements Runnable {
             System.err.println("\n#################################################");
         }
     }
-
 
 }
