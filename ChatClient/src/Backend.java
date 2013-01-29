@@ -75,7 +75,7 @@ public class Backend {
 
                     try {
                         while ((message = reader.readLine()) != null) {
-                            
+
                             if (ChatProtocol.Protocol.getMessageType(message) == ChatProtocol.MessageType.CHAT) {
                                 gui.displayChatMessage(ChatProtocol.Protocol.getMessageContent(message));
                             }
@@ -83,7 +83,7 @@ public class Backend {
                                 //gui.displaySystemMessage(message);
                                 gui.displaySystemMessage(ChatProtocol.Protocol.getMessageContent(message));
                             }
-                            
+
                         }
                     }
                     catch (Exception exc) {
@@ -92,7 +92,7 @@ public class Backend {
                         exc.printStackTrace();
                         System.err.println("#################################################\n");
                     }
-                    
+
                     gui.displaySystemMessage("Server Disconnected");
                 }
             };
@@ -107,20 +107,30 @@ public class Backend {
      * @param text the text to format and send
      */
     public void sendChatMessage(String text) {
+        String rawMessage = ChatProtocol.Protocol.formatAsType(text, ChatProtocol.MessageType.CHAT);
+        sendMessage(rawMessage);
+    }
+    
+    public void sendNickChangeRequest(String newNick) {
+        String rawMessage = ChatProtocol.Protocol.formatAsType(newNick, ChatProtocol.MessageType.CHANGENAME);
+        sendMessage(rawMessage);
+    }
+
+    private void sendMessage(String rawMessage) {
         try {
-            text = ChatProtocol.Protocol.formatAsType(text, ChatProtocol.MessageType.CHAT);
-            writer.println(text);
+            writer.println(rawMessage);
             writer.flush();
         }
         catch (Exception exc) {
             System.err.println("\n#################################################");
             System.err.println("sending message to server - Exception - Stack Trace:");
             exc.printStackTrace();
+            System.err.println("Message:");
+            System.err.println(rawMessage);
             System.err.println("#################################################\n");
         }
     }
 
-    
     /**
      * This function connects to a given server
      * 

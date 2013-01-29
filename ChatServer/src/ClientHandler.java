@@ -89,13 +89,6 @@ public class ClientHandler implements Runnable {
      * @param newNick the new name to set the name to
      */
     public void setName(String newNick) {
-        String rawMessage = ChatProtocol.Protocol.formatAsType(
-                this.clientName+" is now known as "+newNick,
-                ChatProtocol.MessageType.INFO);
-
-        System.out.println(rawMessage);
-        this.server.distributeMessage(rawMessage);
-
         this.clientName = newNick;
     }
     

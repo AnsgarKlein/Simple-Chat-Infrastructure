@@ -76,8 +76,20 @@ public class SwingUI implements UI {
         JMenuItem menuItem = new JMenuItem("Change Nickname");
         menuItem.addActionListener(new ActionListener() {
                 @Override public void actionPerformed(ActionEvent e) {
-                    //open window to change nickname
-                    new SwingNicknameChanger(frame);
+                    //open dialog to change nickname
+
+                    String newNick = (String)JOptionPane.showInputDialog(frame,
+                            "Enter new nickname:",          //message
+                            "Change Nick",                  //window title
+                            JOptionPane.PLAIN_MESSAGE,      //or JOptionPane.QUESTION_MESSAGE
+                            null,                           //Icon
+                            null,                           //possibilities (String[])
+                            "");                            //default value
+
+                    if ( (newNick != null) && (newNick.length() > 0) ) {
+                        clientBackend.sendNickChangeRequest(newNick);
+                    }
+                    //actionPerformed(null);
                 }
             });
 

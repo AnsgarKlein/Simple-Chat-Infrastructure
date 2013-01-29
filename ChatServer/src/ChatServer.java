@@ -124,9 +124,22 @@ public class ChatServer {
 
             distributeMessage(messageToSend);
         } else if (type == ChatProtocol.MessageType.CHANGENAME) {
+            //Extract new nick
+            String newNick = ChatProtocol.Protocol.getMessageContent(rawMessage);
 
-            System.out.println("(type == changename) == true");
-            sendingClient.setName(ChatProtocol.Protocol.getMessageContent(rawMessage));
+            //create info message
+            String rawInfoMessage = ChatProtocol.Protocol.formatAsType(
+                    sendingClient.getName()+" is now known as "+newNick,
+                    ChatProtocol.MessageType.INFO);
+
+            //print simple info message to server terminal
+            System.out.println(sendingClient.getName()+" --> "+newNick);
+
+            //actually change the nick
+            sendingClient.setName(newNick);
+
+            //distribute the info message (which we created before)
+            distributeMessage(rawInfoMessage);
         } else {
             printServerMessage("don't know what to do with this message");
         }

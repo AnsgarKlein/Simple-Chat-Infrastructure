@@ -1,3 +1,5 @@
+package ChatProtocol;
+
 /**
  * Copyright (c) 2013, Ansgar Klein
  * All rights reserved.
@@ -26,7 +28,7 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-package ChatProtocol; 
+  
 
 public class Protocol {
     /**
