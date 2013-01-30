@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -cp lib/:ChatServer/ Main
+java -cp lib/:ChatServer/ Main "$@"
