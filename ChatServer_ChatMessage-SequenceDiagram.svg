@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="40cm" height="20cm" viewBox="-106 61 798 393" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="170" y="64" width="107.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="170" y="64" width="107.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="223.75" y="85.9">
+      <tspan x="223.75" y="85.9">ClientHandler</tspan>
+    </text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="180" y1="88.95" x2="267.5" y2="88.95"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="223.75" y1="100" x2="223.75" y2="123"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="223.75" y1="343" x2="223.75" y2="453"/>
+    <rect style="fill: #ffffff" x="216.75" y="123" width="14" height="220"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="216.75" y="123" width="14" height="220"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="482" y="62" width="62.05" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="482" y="62" width="62.05" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="513.025" y="83.9">
+      <tspan x="513.025" y="83.9">Server</tspan>
+    </text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="492" y1="86.95" x2="534.05" y2="86.95"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="489.024" y1="178.938" x2="230.75" y2="178"/>
+    <polygon style="fill: #000000" points="489.006,183.938 505.024,178.996 489.042,173.938 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="489.006,183.938 505.024,178.996 489.042,173.938 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="367.512" y="197">receiveMessage()</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="513.026" y1="98" x2="513.026" y2="179"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="513.026" y1="339" x2="513.026" y2="450"/>
+    <rect style="fill: #ffffff" x="506.026" y="179" width="14" height="160"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="506.026" y="179" width="14" height="160"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="-68.9355" cy="103" rx="6" ry="6"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-68.9355" cy="103" rx="6" ry="6"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-92.9355" y1="115" x2="-44.9355" y2="115"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9355" y1="109" x2="-68.9355" y2="139"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9355" y1="139" x2="-92.9355" y2="165"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9355" y1="139" x2="-44.9355" y2="165"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9355" y="188.9">
+      <tspan x="-68.9355" y="188.9">Client</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="199.75" y1="139.932" x2="-33.173" y2="139"/>
+    <polygon style="fill: #000000" points="199.73,144.932 215.75,139.996 199.77,134.932 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="199.73,144.932 215.75,139.996 199.77,134.932 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="91.7885" y="149.5">&lt;CHAT&gt;Hello ?&lt;/CHAT&gt;</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="230.75" y1="123" x2="417.826" y2="123"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="417.826" y1="123" x2="417.826" y2="155.5"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="247.75" y1="155.5" x2="417.826" y2="155.5"/>
+    <polygon style="fill: #000000" points="247.75,150.5 231.75,155.5 247.75,160.5 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="247.75,150.5 231.75,155.5 247.75,160.5 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="324.288" y="149.25">listenIncomingMessages()</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="520.026" y1="219" x2="689.826" y2="219"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="689.826" y1="219" x2="689.826" y2="238"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="537.026" y1="238" x2="689.826" y2="238"/>
+    <polygon style="fill: #000000" points="537.026,233 521.026,238 537.026,243 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="537.026,233 521.026,238 537.026,243 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="604.926" y="238.5">distributeMessage()</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="251.622" y1="283.112" x2="499.828" y2="283"/>
+    <polygon style="fill: #000000" points="251.62,278.112 235.622,283.12 251.624,288.112 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="251.62,278.112 235.622,283.12 251.624,288.112 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="367.225" y="293.06">writeToClient()</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="252.298" y1="254.355" x2="503.298" y2="253.418"/>
+    <polygon style="fill: #000000" points="252.279,249.355 236.298,254.415 252.317,259.355 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="252.279,249.355 236.298,254.415 252.317,259.355 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="369.298" y="263.918">writeToClient()</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="253.55" y1="318.18" x2="501.756" y2="317.804"/>
+    <polygon style="fill: #000000" points="253.542,313.18 237.55,318.204 253.557,323.18 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="253.542,313.18 237.55,318.204 253.557,323.18 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="369.153" y="328.005">writeToClient()</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-41.1731" y1="256.937" x2="210.828" y2="256"/>
+    <polygon style="fill: #000000" points="-41.1917,251.937 -57.173,256.996 -41.1545,261.937 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-41.1917,251.937 -57.173,256.996 -41.1545,261.937 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="76.327" y="266.5">&lt;CHAT&gt;Name: Hello ?&lt;/CHAT&gt;</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-40.2433" y1="283.741" x2="211.756" y2="282.804"/>
+    <polygon style="fill: #000000" points="-40.2619,278.741 -56.2432,283.8 -40.2247,288.741 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-40.2619,278.741 -56.2432,283.8 -40.2247,288.741 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="77.2568" y="293.304">&lt;CHAT&gt;Name: Hello ?&lt;/CHAT&gt;</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-42.3433" y1="317.541" x2="209.656" y2="316.604"/>
+    <polygon style="fill: #000000" points="-42.3619,312.541 -58.3432,317.6 -42.3247,322.541 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-42.3619,312.541 -58.3432,317.6 -42.3247,322.541 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="75.1568" y="327.104">&lt;CHAT&gt;Name: Hello ?&lt;/CHAT&gt;</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="254.934" y1="230.021" x2="502.081" y2="230.933"/>
+    <polygon style="fill: #000000" points="254.953,225.021 238.934,229.962 254.916,235.021 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="254.953,225.021 238.934,229.962 254.916,235.021 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="370.008" y="240.445">getName()</text>
+  </g>
+</svg>
