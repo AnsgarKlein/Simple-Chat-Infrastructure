@@ -33,21 +33,19 @@ import ChatProtocol.*;
 public class Backend {
     private static final int ConnectionRetryCount = 3;
 
-    private final String serverIPNumber;
-    private final int serverPortNumber;
+    private String serverIP;
+    private int serverPort;
     private UI gui;
 
     private BufferedReader reader;
     private PrintWriter writer;
     private Socket serverSocket;
 
-    public Backend(String serverIP, int serverPort) {
-        this.serverIPNumber = serverIP;
-        this.serverPortNumber = serverPort;
-
-        //Create appropriate gui
-        gui = new SwingUI(this);
-        //gui = new CliUI(this)
+    public Backend(UI gui_, String serverIP, int serverPort) {
+        //
+        this.gui = gui_;
+        this.serverIP = serverIP;
+        this.serverPort = serverPort;
 
         //Connect to server
         gui.displaySystemMessage("Connecting to: "+serverIP+":"+serverPort+" ... ");

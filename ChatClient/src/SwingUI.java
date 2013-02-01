@@ -40,25 +40,10 @@ public class SwingUI implements UI {
     private Style chatStyle;
     private Style systemStyle;
 
-    public SwingUI(Backend clientBackend) {
-        this.clientBackend = clientBackend;
-
+    public SwingUI() {
         buildGui();
-        sendingTextArea.requestFocus();
-    }
 
-    public void displayChatMessage(String message) {
-        try {
-            StyledDocument doc = incomingTextArea.getStyledDocument();
-            doc.insertString(doc.getLength(), message+"\n", chatStyle);
-        } catch (BadLocationException exc) {}
-    }
-
-    public void displaySystemMessage(String message) {
-        try {
-            StyledDocument doc = incomingTextArea.getStyledDocument();
-            doc.insertString(doc.getLength(), message+"\n", systemStyle);
-        } catch (BadLocationException exc) {}
+        this.clientBackend = new Backend(this, "127.0.0.1", 5000);
     }
 
     private void buildGui() {
@@ -124,7 +109,7 @@ public class SwingUI implements UI {
         sendingTextArea.setMaximumSize(new Dimension(sendingTextArea.getMaximumSize().width, sendingTextArea.getMinimumSize().height));
         sendingTextArea.addActionListener(new ActionListener()
             {
-                public void actionPerformed(ActionEvent ev) {
+                @Override public void actionPerformed(ActionEvent ev) {
                     clientBackend.sendChatMessage(sendingTextArea.getText());
                     sendingTextArea.setText("");
                     sendingTextArea.requestFocus();
@@ -135,7 +120,7 @@ public class SwingUI implements UI {
         sendButton.setMaximumSize(new Dimension(sendButton.getMaximumSize().width, sendButton.getMinimumSize().height));
         sendButton.addActionListener(new ActionListener()
             {
-                public void actionPerformed(ActionEvent ev) {
+                @Override public void actionPerformed(ActionEvent ev) {
                     clientBackend.sendChatMessage(sendingTextArea.getText());
                     sendingTextArea.setText("");
                     sendingTextArea.requestFocus();
@@ -156,5 +141,22 @@ public class SwingUI implements UI {
         mainPanel.add(Box.createRigidArea(new Dimension(0,5)));
         frame.getContentPane().add(mainPanel);
         frame.setVisible(true);
+        
+        //set focus of input field
+        sendingTextArea.requestFocus();
+    }
+
+    public void displayChatMessage(String message) {
+        try {
+            StyledDocument doc = incomingTextArea.getStyledDocument();
+            doc.insertString(doc.getLength(), message+"\n", chatStyle);
+        } catch (BadLocationException exc) {}
+    }
+
+    public void displaySystemMessage(String message) {
+        try {
+            StyledDocument doc = incomingTextArea.getStyledDocument();
+            doc.insertString(doc.getLength(), message+"\n", systemStyle);
+        } catch (BadLocationException exc) {}
     }
 }

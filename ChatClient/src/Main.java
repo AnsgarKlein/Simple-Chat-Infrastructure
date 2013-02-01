@@ -32,10 +32,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
     public static void main(String[] args) {
         setLookAndFeel("System");
-
-        String serverIP = "127.0.0.1";
-        int serverPort = 5000;
-        new Backend(serverIP, serverPort);
+        
+        new SwingUI();
     }
 
     public static void setLookAndFeel(String value) {
