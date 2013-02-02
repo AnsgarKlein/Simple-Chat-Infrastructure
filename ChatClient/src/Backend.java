@@ -61,6 +61,7 @@ public class Backend {
 
             if (!isConnected) {
                 gui.displaySystemMessage("error connecting to server... exit\n");
+                return;
                 //System.exit(1);
             }
 

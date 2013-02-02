@@ -40,10 +40,10 @@ public class SwingUI implements UI {
     private Style chatStyle;
     private Style systemStyle;
 
-    public SwingUI() {
+    public SwingUI(String ip, int port) {
         buildGui();
 
-        this.clientBackend = new Backend(this, "127.0.0.1", 5000);
+        this.clientBackend = new Backend(this, ip, port);
     }
 
     private void buildGui() {
@@ -74,7 +74,6 @@ public class SwingUI implements UI {
                     if ( (newNick != null) && (newNick.length() > 0) ) {
                         clientBackend.sendNickChangeRequest(newNick);
                     }
-                    //actionPerformed(null);
                 }
             });
 

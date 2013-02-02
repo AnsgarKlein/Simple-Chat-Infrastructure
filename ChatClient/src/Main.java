@@ -33,7 +33,9 @@ public class Main {
     public static void main(String[] args) {
         setLookAndFeel("System");
         
-        new SwingUI();
+        //
+        //new SwingConnectDialog("127.0.0.1", 5000);
+        new SwingConnectDialog(null, 0);
     }
 
     public static void setLookAndFeel(String value) {

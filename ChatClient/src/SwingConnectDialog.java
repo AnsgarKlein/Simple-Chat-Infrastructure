@@ -27,42 +27,85 @@
  */
 
 import javax.swing.*;
+import java.awt.GridLayout;
+//import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Dimension;
 
-public class SwingNicknameChanger extends JDialog implements ActionListener {
-    public SwingNicknameChanger(JFrame parentFrame) {
+import java.net.Inet4Address;
+
+public class SwingConnectDialog extends JFrame implements ActionListener {
+    JTextField ipField;
+    JTextField portField;
+
+    public SwingConnectDialog(String ip, int port) {
+        if (ip != null && port != 0 && isValidIP(ip)) {
+            new SwingUI(ip, port);
+            return;
+        }
+
+        buildGui();
+    }
+
+    private boolean isValidIP(String str) {
+        String[] parts = str.split("\\.");
+        for (String s : parts) {
+            int i = Integer.parseInt(s);
+            if (i < 0 || i > 255) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void buildGui() {
         //setup
-        super(parentFrame, true); //make dialog modal
-        this.setSize(300, 80);
+        this.setSize(300, 110);
         this.setResizable(false);
 
         //setup main panel
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.LINE_AXIS));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
-        //setup text field
-        JTextField nicknameField = new JTextField();
-        nicknameField.addActionListener(this);
-        nicknameField.setMaximumSize(new Dimension(nicknameField.getMaximumSize().width, nicknameField.getMinimumSize().height));
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(2, 2));
+        mainPanel.add(gridPanel);
 
-        //setup apply button
-        JButton applyButton = new JButton("Apply");
+        //setup components
+        JLabel ipLabel = new JLabel("IP:");
+        gridPanel.add(ipLabel);
+
+        ipField = new JTextField();
+        ipField.setText("127.0.0.1");
+        gridPanel.add(ipField);
+
+        JLabel portLabel = new JLabel("PORT:");
+        gridPanel.add(portLabel);
+
+        portField = new JTextField();
+        portField.setText("5000");
+        gridPanel.add(portField);
+
+        //add button
+        JButton applyButton = new JButton("Start");
         applyButton.addActionListener(this);
+        mainPanel.add(applyButton);
 
         //Put everything together & show
-        mainPanel.add(Box.createRigidArea(new Dimension(5,0)));
-        mainPanel.add(nicknameField);
-        mainPanel.add(Box.createRigidArea(new Dimension(5,0)));
-        mainPanel.add(applyButton);
-        mainPanel.add(Box.createRigidArea(new Dimension(5,0)));
         this.getContentPane().add(mainPanel);
         this.setVisible(true);
-        
     }
 
     public void actionPerformed(ActionEvent ev) {
-        this.dispose();
+        String ip = ipField.getText();
+        String portString = portField.getText();
+
+        if (!portString.isEmpty() && !ip.isEmpty()) {
+            int port = Integer.parseInt(portString);
+
+            new SwingUI(ip, port);
+
+            this.dispose();
+        }
     }
 }
