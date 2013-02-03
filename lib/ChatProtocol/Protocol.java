@@ -28,7 +28,6 @@ package ChatProtocol;
  * either expressed or implied, of the FreeBSD Project.
  */
 
-  
 
 public class Protocol {
     /**
@@ -44,18 +43,8 @@ public class Protocol {
         }
 
         //<CHANGENAME>new name</CHANGENAME>
-        if (rawMessage.startsWith("<CHANGENAME>") && rawMessage.endsWith("</CHANGENAME>")) {
-            return MessageType.CHANGENAME;
-        }
-
-        //<AUTHENTICATE>message</AUTHENTICATE>
-        if (rawMessage.startsWith("<AUTHENTICATE>") && rawMessage.endsWith("</AUTHENTICATE>")) {
-            return MessageType.AUTHENTICATE;
-        }
-
-        //<DISCONNECT>goodbye message</DISCONNECT>
-        if (rawMessage.startsWith("<DISCONNECT>") && rawMessage.endsWith("</DISCONNECT>")) {
-            return MessageType.DISCONNECT;
+        if (rawMessage.startsWith("<CHANGENAMEREQUEST>") && rawMessage.endsWith("</CHANGENAMEREQUEST>")) {
+            return MessageType.CHANGENAMEREQUEST;
         }
 
         //<INFO>info message</INFO>
@@ -66,7 +55,7 @@ public class Protocol {
         //message is not formated correctly / does not follow specification
         return MessageType.BAD;
     }
-    
+
     /**
      * This function extracts the content of a message from a raw message
      * 
@@ -81,16 +70,8 @@ public class Protocol {
             return rawMessage.substring(6, rawMessage.length()-7);
         }
 
-        if (getMessageType(rawMessage) == MessageType.CHANGENAME) {
-            return rawMessage.substring(12, rawMessage.length()-13);
-        }
-
-        if (getMessageType(rawMessage) == MessageType.AUTHENTICATE) {
-            return rawMessage.substring(14, rawMessage.length()-15);
-        }
-
-        if (getMessageType(rawMessage) == MessageType.DISCONNECT) {
-            return rawMessage.substring(12, rawMessage.length()-13);
+        if (getMessageType(rawMessage) == MessageType.CHANGENAMEREQUEST) {
+            return rawMessage.substring(19, rawMessage.length()-20);
         }
 
         if (getMessageType(rawMessage) == MessageType.INFO) {
@@ -100,7 +81,6 @@ public class Protocol {
         return "could not read format of message properly";
     }
 
-    
     /**
      * This function will format a raw text as a valid message of given
      * type.
@@ -113,12 +93,8 @@ public class Protocol {
         switch (type) {
             case CHAT:
             return "<CHAT>"+text+"</CHAT>";
-            case CHANGENAME:
-            return "<CHANGENAME>"+text+"</CHANGENAME>";
-            case AUTHENTICATE:
-            return "<AUTHENTICATE>"+text+"</AUTHENTICATE>";
-            case DISCONNECT:
-            return "<DISCONNECT>"+text+"</DISCONNECT>";
+            case CHANGENAMEREQUEST:
+            return "<CHANGENAMEREQUEST>"+text+"</CHANGENAMEREQUEST>";
             case INFO:
             return "<INFO>"+text+"</INFO>";
             case BAD:

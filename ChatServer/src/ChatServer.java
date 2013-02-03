@@ -123,7 +123,7 @@ public class ChatServer {
                     ChatProtocol.MessageType.CHAT);
 
             distributeMessage(messageToSend);
-        } else if (type == ChatProtocol.MessageType.CHANGENAME) {
+        } else if (type == ChatProtocol.MessageType.CHANGENAMEREQUEST) {
             //Extract new nick
             String newNick = ChatProtocol.Protocol.getMessageContent(rawMessage);
 

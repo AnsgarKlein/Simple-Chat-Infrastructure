@@ -111,7 +111,7 @@ public class Backend {
     }
     
     public void sendNickChangeRequest(String newNick) {
-        String rawMessage = ChatProtocol.Protocol.formatAsType(newNick, ChatProtocol.MessageType.CHANGENAME);
+        String rawMessage = ChatProtocol.Protocol.formatAsType(newNick, ChatProtocol.MessageType.CHANGENAMEREQUEST);
         sendMessage(rawMessage);
     }
 

@@ -32,9 +32,7 @@ package ChatProtocol;
 
 public enum MessageType {
     CHAT,
-    CHANGENAME,
-    AUTHENTICATE,
-    DISCONNECT,
+    CHANGENAMEREQUEST,
     INFO,
     BAD
 }
